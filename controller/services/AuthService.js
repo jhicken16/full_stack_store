@@ -1,5 +1,5 @@
 const httpError = require('http-errors')
-const db = require('../db/index')
+const db = require('../../model/db')
 const bcrypt = require('bcrypt')
 
 const CustomerModel = require('../../model/CustomersModel')

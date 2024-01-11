@@ -1,6 +1,7 @@
-const passport = require('passport-local')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
-const AuthService = require('../service/AuthService')
+const AuthService = require('../services/AuthService')
 const Authentication = new AuthService()
 
 module.exports = (app) => {

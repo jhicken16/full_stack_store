@@ -9,7 +9,7 @@ module.exports = (app) => {
 
     const passport = passportLoader(expressApp)
 
-    routesLoader(app)
+    routesLoader(app, passport)
 
     swagLoader(app)
 

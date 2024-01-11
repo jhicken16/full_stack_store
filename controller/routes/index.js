@@ -1,5 +1,6 @@
 const products = require('./products')
 
-module.exports = (app) => {
+
+module.exports = (app, passport) => {
     products(app)
 }

@@ -10,10 +10,16 @@ module.exports = class ProductModel {
      */
     async getProducts(category){
 
-        const statement =  `SELECT *
+        let statement =  `SELECT *
                             FROM products
                             WHERE category = $1`
-        const values = [category]
+        let values = [category]
+
+        if(!category){
+            statement = `SELECT *
+                        FROM products`
+            values = []
+        }
 
         try {
             const response = await db.query(statement, values)

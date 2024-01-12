@@ -38,7 +38,7 @@ module.exports = class AuthService {
 
             if(!userRow){
                 console.log('error')
-                throw httpError(401, 'email or username is incorrect')
+                throw httpError(401, 'no rows')
             }
 
             const match = await bcrypt.compare(data.password, userRow[0].password)

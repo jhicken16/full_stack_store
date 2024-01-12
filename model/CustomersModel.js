@@ -9,10 +9,10 @@ module.exports = class CustomerModel {
      */
     async findByEmail(email) {
 
-        try{  
+        try{ 
             const response = await db.query('SELECT * FROM customers WHERE email = $1', [email])
-
             if(response.rows.length === 0){
+                
                 return null
             }
             

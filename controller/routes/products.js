@@ -8,10 +8,10 @@ module.exports = (app) => {
      * @swagger
      * /products:
      *      get:
-     *      description: Retrieves all products from the database.
-     *      response:
-     *          200:
-     *              description: Success
+     *          description: Retrieves all products from the database.
+     *          response:
+     *              200:
+     *                  description: Success
      */
     router.get('', (request, response, next) => {
         response.status(420).send('products')

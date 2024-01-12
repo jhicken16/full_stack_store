@@ -2,7 +2,8 @@ const swaggerJsdoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 
 const swaggerOptions = {
-    swaggerDefinition: {
+    definition: {
+        openapi: '3.0.0',
         info: {
             title: 'e-commerce',
             version: '1.0.0',
@@ -11,7 +12,7 @@ const swaggerOptions = {
         
     },
     //An array of were to find the api's; paths values.
-    apis: ['./routes/products.js']
+    apis: ['./controller/routes/products.js', './controller/routes/auth.js']
 }
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions)

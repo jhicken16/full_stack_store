@@ -8,43 +8,7 @@ const ProductInteraction = new ProductServices()
 
 module.exports = (app) => {
     app.use('/products', router)
-    //swagger component
-    /**
-     * @swagger
-     * components:
-     *      schema:
-     *          products:
-     *              type: object
-     *              required:
-     *                  -id
-     *                  -name
-     *                  -price
-     *                  -stock
-     *                  -category
-     *              properties:
-     *                  id: 
-     *                      type: int
-     *                      description: auto generated integer
-     *                  name:
-     *                      type: string
-     *                      description: name of product
-     *                  price:
-     *                      type: float
-     *                      description: price of product
-     *                  stock: 
-     *                      type: int
-     *                      description: amount of stock left
-     *                  category: 
-     *                      type: string
-     *                      description: category the product comes under.
-     *              example:
-     *                  id: 10
-     *                  name: "pants"
-     *                  price: 0.5
-     *                  stock: 10
-     *                  category: "cloths"
-     *            
-     */
+   
 
     /**
      * @swagger
@@ -69,7 +33,7 @@ module.exports = (app) => {
      *                          schema:
      *                              type: array
      *                              items:
-     *                                  $ref: '#/components/schema/products'
+     *                                  $ref: '#/components/schemas/products'
      *              404:
      *                  description: resource not found most likely category does not exist
      *                  content:

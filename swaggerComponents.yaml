@@ -1,4 +1,10 @@
 components:
+  securitySchemes:
+    localAuth:
+      type: http
+      scheme: basic
+      in: cookie
+      name: connect.sid
   schemas:
     products:
       type: object
@@ -30,3 +36,47 @@ components:
         price: 0.5
         stock: 10
         category: "cloths"
+    order: 
+      type: object
+      required:
+        -id
+        -customer_id
+        -data_ordered
+        -shipping_addres
+        -order_id
+        -product_id
+        -quantity
+      properties:
+        id:
+          type: integer
+          description: auto generated id
+        customer_id: 
+          type: integer
+          description: auto generated id for customer
+        data_ordered:
+          type: string
+          description: the date the user made the order in ISO 8601
+        shipping_addres: 
+          type: string
+          description: The customers address
+        order_id: 
+          type: integer
+          description: auto generated id that groups all products together
+        product_id: 
+          type: integer
+          description: auto generated id that relates to the product
+        quantity: 
+          type: integer
+          description: The amount of product ordered by customer
+        example:
+          id: 8
+          customer_id: 10
+          data_ordered: "2023-12-21T00:00:00.000Z"
+          shipping_addres: "8, road name, area, post code"
+          order_id: 5
+          product_id: 3
+          quantity: 6
+    orders:
+      type: array
+      items:
+        $ref: '#/components/schemas/order'

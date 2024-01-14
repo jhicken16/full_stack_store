@@ -12,7 +12,7 @@ const swaggerOptions = {
         
     },
     //An array of were to find the api's; paths values.
-    apis: [ './swaggerComponents.yaml', './controller/routes/products.js', './controller/routes/auth.js']
+    apis: [ './swaggerComponents.yaml', './controller/routes/products.js', './controller/routes/auth.js', './controller/routes/orders.js']
 }
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions)

@@ -32,4 +32,14 @@ module.exports = class CartService {
             throw httpError(500, 'Internal server error')
         }
     }
+
+    async clearUserCart(userId){
+        try{
+            const response = await Cart.removeUsersCart(userId)
+            return response
+        }
+        catch(err){
+            throw httpError(500, 'Internal server error')
+        }
+    }
 }

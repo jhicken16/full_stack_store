@@ -30,4 +30,18 @@ module.exports = class CartModel {
             throw new Error(err)
         }
     }
+
+    async removeUsersCart(userId){
+        const statement =   `DELETE FROM cart 
+                            WHERE customer_id = $1`
+        const values = [userId]
+
+        try{
+            const response = await db.query(statement, values)
+            return response.command
+        }
+        catch(err){
+            throw new Error(err)
+        }
+    }
 }

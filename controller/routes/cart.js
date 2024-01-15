@@ -137,26 +137,93 @@ module.exports = (app) => {
        
     })
 
-    router.post('/checkout', async (request, response, next) => {
 
-        const { userId } = request.body
+    /**
+     * @swagger
+     * /cart:
+     *      post:
+     *          description: Takes users cart and create order updating order table and order_items table 
+     *          tags:
+     *          - cart
+     *          requestBody: 
+     *              required: true
+     *              content: 
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              order_info:
+     *                                  type: object
+     *                                  properties: 
+     *                                      shipping:
+     *                                          type: string
+     *                                          example: "4, road name, city, postcode"
+     *          parameters:
+     *           - in: cookie 
+     *             name: id
+     *             schema:
+     *              type: object
+     *              properties:
+     *                  id:
+     *                      type: string
+     *                      example: "bce8e3j3485gvnktb 8bhf57"
+     *          responses:
+     *              200:
+     *                  description: success, will receive rows from ordered_items table of product that have just been ordered.
+     *                  content:
+     *                      application/json:
+     *                          schema:
+     *                              type: array
+     *                              items:
+     *                                  type: object
+     *                                  properties: 
+     *                                      order_id:
+     *                                          type: integer
+     *                                          description: auto generated id
+     *                                          example: 11
+     *                                      product_id:
+     *                                          type: integer
+     *                                          description: auto generated id
+     *                                          example: 11
+     *                                      quantity:
+     *                                          type: integer
+     *                                          description:
+     *                                          example: 11
+     *              401:
+     *                  description: unauthorized in to login via login route
+     *                  content: 
+     *                      application/json:
+     *                          schema:
+     *                              type: object
+     *                              properties:
+     *                                  message:
+     *                                      type: string
+     *                                      example: Not authenticated
+     *              
+     *                      
+     */
+    router.post('', checkAuthentication, async (request, response, next) => {
+
+        const { id } = request.user
         const { order_info } = request.body
         console.log(order_info)
 
         try{
 
-            const cart = await Cart.usersCart(userId)
+            const cart = await Cart.usersCart(id)
 
             //set up order
-            const order = await Order.makeOrder(userId, order_info.shipping)
+            const order = await Order.makeOrder(id, order_info.shipping)
             console.log(order)
 
             const addProductToOrderItems = await Order.productsToCart(cart, order.id)
+            
+            //need to remove every think related to user from cart once order has been made.
+            await Cart.clearUserCart(id)
 
             response.status(420).send(addProductToOrderItems)
         }
         catch(err){
-            console.log(err)
             next(err)
         }
 

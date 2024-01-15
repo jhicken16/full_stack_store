@@ -15,6 +15,8 @@ module.exports = (app) => {
      * /products:
      *      get:
      *          description: Retrieves all products from the database.
+     *          tags:
+     *           - products
      *          requestBody:
      *              required: true
      *              content: 

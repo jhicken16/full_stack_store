@@ -68,15 +68,37 @@ components:
         quantity: 
           type: integer
           description: The amount of product ordered by customer
-        example:
-          id: 8
-          customer_id: 10
-          data_ordered: "2023-12-21T00:00:00.000Z"
-          shipping_addres: "8, road name, area, post code"
-          order_id: 5
-          product_id: 3
-          quantity: 6
+      example:
+        id: 8
+        customer_id: 10
+        data_ordered: "2023-12-21T00:00:00.000Z"
+        shipping_addres: "8, road name, area, post code"
+        order_id: 5
+        product_id: 3
+        quantity: 6
     orders:
       type: array
       items:
         $ref: '#/components/schemas/order'
+    cart:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: Auto-generated ID
+          customer_id:
+            type: integer
+            description: Auto-generated customer ID
+          quanity:
+            type: integer
+            description: Quantity ordered by the user
+          fk_product_id:
+            type: integer
+            description: Auto-generated product ID
+        example:
+          id: 1
+          customer_id: 2
+          quanity: 3
+          fk_product_id: 4

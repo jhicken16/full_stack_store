@@ -1,4 +1,4 @@
-const db = require('../db')
+const db = require('./db')
 
 module.exports = class CartModel {
     async getCart(customerId){
@@ -21,6 +21,20 @@ module.exports = class CartModel {
                             (customer_id, quanity, fk_product_id)
                             VALUES ($1, $2, $3)`
         const values = [userId, quantity, productId]
+
+        try{
+            const response = await db.query(statement, values)
+            return response.command
+        }
+        catch(err){
+            throw new Error(err)
+        }
+    }
+
+    async removeUsersCart(userId){
+        const statement =   `DELETE FROM cart 
+                            WHERE customer_id = $1`
+        const values = [userId]
 
         try{
             const response = await db.query(statement, values)

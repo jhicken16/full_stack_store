@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const { param, validationResult } = require('express-validator')
+
 const OrderService = require('../services/OrderService')
 const Orders = new OrderService()
 
@@ -47,7 +49,17 @@ module.exports = (app) => {
      *              
      *         
      */
-    router.get('/:userId', checkAuthentication, async (request, response, next) => {
+    router.get('/:userId', 
+    [
+        checkAuthentication,
+        param("userId").exists().toInt().blacklist('<>,./?!`"{(;:')
+    ], 
+    async (request, response, next) => {
+
+        const result = validationResult(request)
+        if(!result.isEmpty()){
+            return response.status(422).send(`Invalid param`)
+        }
 
         const { userId } = request.params
         console.log(userId)

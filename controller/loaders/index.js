@@ -16,6 +16,6 @@ module.exports = (app) => {
     app.use((err, req, res, next) => {
         console.log(err)
         const {message, status} = err
-        return res.status(status).send({message})
+        return res.status(status).json({message: message})
     })
 }

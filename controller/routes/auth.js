@@ -3,6 +3,9 @@ const router = express.Router()
 
 const { body, validationResult } = require('express-validator')
 
+const AuthService = require('../services/AuthService')
+const Authentication = new AuthService()
+
 module.exports = (app, passport) => {
     
     app.use('/auth', router)
@@ -59,13 +62,13 @@ module.exports = (app, passport) => {
         const result = validationResult(request)
         if ( !result.isEmpty()){
             console.log(result)
-            return response.status(422).send(`Invalid input on ${result.path}`)
+            return response.status(422).json({message: `Invalid input on ${result.path}`})
         }
         const data = request.body
         try {
             const res = await Authentication.register(data)
             console.log(res)
-            response.status(200).send('ok')
+            response.status(200).send({message: 'ok'})
         } catch(err){
             next(err)
         } 
@@ -115,6 +118,6 @@ module.exports = (app, passport) => {
         
         const data = request.body
         console.log('login triggered')
-        response.status(200).send("login supposedly successful")
+        response.status(200).send({message: "login supposedly successful"})
     })
 }

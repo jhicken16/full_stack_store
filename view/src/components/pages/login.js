@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import {register, login} from '../../services/services';
+import { login } from '../../services/services';
 import Error from '../Error';
 
-export default function Home(){
-    const [ name, setName ] = useState('')
+export default function Login(){
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
@@ -14,11 +13,8 @@ export default function Home(){
 
         //pass states to fetch request.
         try{
-            const response = await register(name, email, password)
-            if(response.status === 200){
-                const userLoggedIn = await login(email, password)
-                console.log(document.cookie)
-            }
+            const userLoggedIn = await login(email, password)
+            console.log(userLoggedIn)
         }
         catch(err){
             //This is where I will need to redirect the page to the error page.
@@ -32,10 +28,6 @@ export default function Home(){
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <label>
-                    name:
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} />
-                </label>
                 <label>
                     email:
                     <input type="text" value={email} onChange={e => setEmail(e.target.value)} />

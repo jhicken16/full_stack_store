@@ -8,7 +8,8 @@ const { SESSION_KEY } = require('../config')
 module.exports = (app) => {
 
     app.use(cors({
-        origin: "http://localhost:3000"
+        origin: "http://localhost:3000",
+        credentials: true
     }))
     app.use(helmet())
     app.use(bodyParser.json())
@@ -18,7 +19,7 @@ module.exports = (app) => {
             secret: SESSION_KEY,
             resave: false,
             saveUninitialized: false,
-            cookie: { maxAge: 1000 * 60 *60 * 24, secure: false, sameSite: "none"},
+            cookie: { maxAge: 1000 * 60 *60 * 24, secure: false, sameSite: "Strict"},
         })
     )
     

@@ -54,9 +54,9 @@ module.exports = (app, passport) => {
      */
     router.post('/register',
     [
-        body('email').notEmpty().isString().isEmail().blacklist('<>,./?!`"{(;:'),
+        body('email').notEmpty().isString().isEmail().blacklist('<>,/?!`"{(;:'),
         body('name').notEmpty().isString().blacklist('<>,./?!`"{(;:'),
-        body('password').notEmpty().isString().blacklist('<>,./?!`"{(;:')
+        body('password').notEmpty().isString()
     ] 
     ,async (request, response, next) => {
         const result = validationResult(request)

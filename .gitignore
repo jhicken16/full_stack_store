@@ -1,2 +1,26 @@
 /node_modules
 /.env
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/view/node_modules
+/view/.pnp
+/view.pnp.js
+
+# testing
+/view/coverage
+
+# production
+/view/build
+
+# misc
+/view.DS_Store
+/view.env.local
+/view.env.development.local
+/view.env.test.local
+/view.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

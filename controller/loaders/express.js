@@ -1,10 +1,16 @@
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const helmet = require('helmet')
+const cors = require('cors')
 
 const { SESSION_KEY } = require('../config')
 
 module.exports = (app) => {
 
+    app.use(cors({
+        origin: "http://localhost:3000"
+    }))
+    app.use(helmet())
     app.use(bodyParser.json())
 
     app.use(

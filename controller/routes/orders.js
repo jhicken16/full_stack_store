@@ -16,6 +16,8 @@ module.exports = (app) => {
      * /orders/{userId}:
      *      get:
      *          description: retrieves all orders placed by user Uses localAuth which you get from login sending cookie back and forth.
+     *          tags:
+     *          - orders
      *          parameters:
      *            - in: path
      *              name: userId
@@ -32,20 +34,24 @@ module.exports = (app) => {
      *                              $ref: '#/components/schemas/orders'
      *              401:
      *                  description: not authorized
-     *                      schema:
-     *                          type: object
-     *                          properties:
-     *                              message:
-     *                                  type: string
-     *                                  example: Not authorized
+     *                  content:
+     *                      application/json:
+     *                          schema:
+     *                              type: object
+     *                              properties:
+     *                                  message:
+     *                                      type: string
+     *                                      example: Not authorized
      *              404:
      *                  description: resources not found user does not have any orders
-     *                      schema:
-     *                          type: object
-     *                          properties:
-     *                              message:
-     *                                  type: string
-     *                                  example: resources not found
+     *                  content:
+     *                      application/json:
+     *                          schema:
+     *                              type: object
+     *                              properties:
+     *                                  message:
+     *                                      type: string
+     *                                      example: resources not found
      *              
      *         
      */

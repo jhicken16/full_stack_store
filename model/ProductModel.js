@@ -15,7 +15,7 @@ module.exports = class ProductModel {
                             WHERE category = $1`
         let values = [category]
 
-        if(!category){
+        if(category === 'none'){
             statement = `SELECT *
                         FROM products`
             values = []

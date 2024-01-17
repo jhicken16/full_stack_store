@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { body, validationResult } = require('express-validator')
+const { param, validationResult } = require('express-validator')
 const httpError = require('http-errors')
 
 const ProductServices = require('../services/ProductService')
@@ -57,9 +57,9 @@ module.exports = (app) => {
      *                                      type: string
      *                                      example: "Invalid input on category"
      */
-    router.get('', 
+    router.get('/:category', 
     [
-        body('category').isString().custom((value)=> {
+        param('category').isString().custom((value)=> {
             if (value.includes("'") || value.includes("%") || value.includes("_")) {
                 throw new Error('Invalid characters in category');
             }
@@ -67,12 +67,12 @@ module.exports = (app) => {
         })
     ],
     async (request, response, next) => {
-        
+        console.log('products')
         const valid = validationResult(request)
 
          //Really you would want more option to take out of the query and apply to the database such as limit and last product or some way for organizing content.
-         const { category } = request.body
-
+         const { category } = request.params
+         console.log(category)
          try{
             if( !valid.isEmpty() ){
                 throw httpError(422, `Invalid input on ${valid.array()[0].path}`)

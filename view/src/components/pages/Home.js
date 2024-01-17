@@ -16,7 +16,7 @@ export default function Home(){
         try{
             const response = await register(name, email, password)
             if(response.status === 200){
-                const userLoggedIn = await login(email, password)
+                await login(email, password)
                 console.log(document.cookie)
             }
         }
@@ -46,6 +46,9 @@ export default function Home(){
                 </label>
                 <input type="submit" value="Register" />
             </form>
+            <a href='http://localhost:4000/auth/google'>
+                <button>google+</button>
+            </a>
             {error && <Error errorMessage={error} />}
         </>
     )

@@ -120,4 +120,12 @@ module.exports = (app, passport) => {
         console.log('login triggered')
         response.status(200).send({message: "login supposedly successful"})
     })
+
+    router.get('/google', passport.authenticate('google', {
+        scope: ['email', 'profile']
+    }))
+
+    router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
+        res.redirect('http://localhost:3000')
+    })
 }

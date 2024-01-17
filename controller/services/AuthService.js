@@ -24,7 +24,10 @@ module.exports = class AuthService {
             return await Customer.createCustomer(data)
         }
         catch(err){
-            throw httpError(500, err)
+            if(err.status){
+                throw err
+            }
+            throw httpError(500, 'Internal server error')
         }
         
     }

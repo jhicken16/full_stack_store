@@ -174,4 +174,24 @@ module.exports = (app, passport) => {
     router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
         res.redirect('http://localhost:3000')
     })
+
+
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Logs out the current user
+ *     description: This endpoint logs out the current user and redirects them to the specified URL.
+ *     responses:
+ *       200:
+ *         description: Successfully logged out and redirected
+ *       400:
+ *         description: An error occurred during logout
+ */
+    router.post('/logout', function(req, res, next){
+        req.logout(function(err) {
+          if (err) { return next(err); }
+          res.status(200).send('Logged Out');
+        });
+    });
 }

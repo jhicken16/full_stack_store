@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import {register, login} from '../../services/services';
+import {register, login, logOut} from '../../services/services';
 import Error from '../Error';
+
 
 export default function Home(){
     const [ name, setName ] = useState('')
@@ -26,6 +27,15 @@ export default function Home(){
             setError(err)
         }  
     }
+    const handleLogOut = async () => {
+        console.log('LogOut Triggered')
+        try{
+            logOut()
+        }
+        catch(err){
+            setError(err)
+        }
+    }
 
 
 
@@ -49,6 +59,7 @@ export default function Home(){
             <a href='http://localhost:4000/auth/google'>
                 <button>google+</button>
             </a>
+            <button onClick={handleLogOut}>LogOut</button>
             {error && <Error errorMessage={error} />}
         </>
     )

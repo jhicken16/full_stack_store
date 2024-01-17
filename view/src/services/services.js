@@ -65,4 +65,24 @@ async function login(email, password){
     
 }
 
-export {register, login} 
+async function logOut(){
+    try{
+        const response = await fetch('http://localhost:4000/auth/logout',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        })
+        console.log(response)
+        if(!response.ok){
+            throw new Error('Logout Failed')
+        }
+    }
+    catch(err){
+        throw err
+    }
+}
+
+export {register, login, logOut} 

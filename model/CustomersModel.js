@@ -35,7 +35,7 @@ module.exports = class CustomerModel {
         data.password = await bcrypt.hash(data.password, salt)
         
         try{
-            const response = await db.query('INSERT INTO customers(name, email, password) VALUES($1, $2, $3)', 
+            const response = await db.query('INSERT INTO customers(name, email, password) VALUES($1, $2, $3) RETURNING id, email, name', 
                 [data.name, data.email, data.password]);
             return response.command
         }

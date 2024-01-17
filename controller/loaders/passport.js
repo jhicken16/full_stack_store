@@ -1,5 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const GoogleStrategy = require('passport-google-oauth2')
+
+const { G } = require('../config')
 
 const AuthService = require('../services/AuthService')
 const Authentication = new AuthService()
@@ -35,6 +38,41 @@ module.exports = (app) => {
             }
         }
     ))
+
+    //This needs refactoring by quit a bit.
+    passport.use(
+        new GoogleStrategy({
+            callbackURL: 'http://localhost:4000/auth/google/redirect',
+            clientID: G.CLIENTID,
+            clientSecret: G.CLIENTSECRET
+        }, async (accessToken, refreshToken, profile, done) => {
+            const data = {
+                email: profile.email,
+                name: profile.displayName,
+                //this stinks need to refactor database save the gooogle id to check user is how they say they are. do I want a new table for google 0ath grants
+                password: profile.given_name + profile.id + profile.family_name
+            }
+            try{
+                const register = await Authentication.register(data)
+                done(null, register)
+            }
+            catch(err){
+                console.log(err)
+                if(err.status === 409){
+                    try{
+                        const login = await Authentication.login({email: data.email, password: data.password})
+                        done(null, login)
+                    }
+                    catch(err){
+                        done(err)
+                    }
+                }
+                else{
+                    done(err)
+                }  
+            }
+        })
+    )
     
     return passport
 }

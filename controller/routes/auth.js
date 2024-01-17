@@ -14,6 +14,8 @@ module.exports = (app, passport) => {
      * @swagger
      * /auth/register:
      *      post:
+     *          tags:
+     *           - 'Authentication'
      *          summary: Creates account for user
      *          description: excepts email, password and name, using this to create account for the user
      *          requestBody:
@@ -78,6 +80,8 @@ module.exports = (app, passport) => {
      * @swagger
      * /auth/login:
      *      post:
+     *          tags:
+     *           - 'Authentication'
      *          summary: logs in user
      *          description: This is a path that logs the user in and stores related user information in sessions object
      *          requestBody:
@@ -121,10 +125,52 @@ module.exports = (app, passport) => {
         response.status(200).send({message: "login supposedly successful"})
     })
 
+/**
+ * @swagger
+ * /google:
+ *  get:
+ *     tags:
+ *      - 'Authentication'
+ *     summary: 'Authenticate with Google'
+ *     description: 'This endpoint initiates the Google authentication process.'
+ *     operationId: 'authenticateGoogle'
+ *     responses:
+ *       '302':
+ *         description: 'Redirect to Google for authentication.'
+ *     security:
+ *       - googleAuth:
+ *           - 'email'
+ *           - 'profile'
+ * securityDefinitions:
+ *   googleAuth:
+ *     type: 'oauth2'
+ *     authorizationUrl: 'https://accounts.google.com/o/oauth2/auth'
+ *     flow: 'implicit'
+ *     scopes:
+ *       "email": "Access to user's email"
+ *       "profile": "Access to user's profile information"
+ */
     router.get('/google', passport.authenticate('google', {
         scope: ['email', 'profile']
     }))
 
+/**
+ * @swagger
+ * /google/redirect:
+ *   get:
+ *     tags:
+ *       - 'Authentication'
+ *     summary: 'Google Authentication Redirect'
+ *     description: 'This endpoint handles the redirect from Google after authentication.'
+ *     operationId: 'googleRedirect'
+ *     responses:
+ *       '302':
+ *         description: 'Redirect to the client application.'
+ *     security:
+ *       - googleAuth:
+ *           - 'email'
+ *           - 'profile'
+ */
     router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
         res.redirect('http://localhost:3000')
     })

@@ -85,4 +85,25 @@ async function logOut(){
     }
 }
 
-export {register, login, logOut} 
+async function getProducts(){
+    try{
+        const response = await fetch('http://localhost:4000/products/none', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        console.log(response)
+        const data = await response.json()
+        console.log(data)
+        if(!response.ok){
+            throw new Error(`http error! status: ${response.status}, message: ${data.message}`)
+        }
+        console.log(data)
+        return data
+    }
+    catch(err){
+        throw err
+    }
+}
+export {register, login, logOut, getProducts} 

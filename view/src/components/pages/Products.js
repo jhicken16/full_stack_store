@@ -25,7 +25,8 @@ export default function Products(){
     }, [])
 
     return (
-        products.map((product, index) => (
+        <>
+        { products.map((product, index) => (
             <Product 
                 key={index}
                 id={product.id}
@@ -34,6 +35,9 @@ export default function Products(){
                 stock={product.stock}
                 category={product.category}
             />
-        ))
+        )) }
+        {error && <Error errorMessage={error} />}
+        </>
+        
     )
 }

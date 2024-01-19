@@ -4,7 +4,7 @@ module.exports = class CartModel {
     async getCart(customerId){
         
         try{
-            const response = await db.query('SELECT cart.quanity, cart.fk_product_id, products.name, products.price FROM cart JOIN products ON cart.fk_product_id = products.id Where customer_id = $1', [customerId])
+            const response = await db.query('SELECT cart.quanity, products.name, products.price FROM cart JOIN products ON cart.fk_product_id = products.id Where customer_id = $1', [customerId])
             if(response.rows.length === 0){
                 return null
             }

@@ -93,17 +93,45 @@ async function getProducts(){
                 'Content-Type': 'application/json'
             },
         })
-        console.log(response)
+        
         const data = await response.json()
-        console.log(data)
+        
         if(!response.ok){
             throw new Error(`http error! status: ${response.status}, message: ${data.message}`)
         }
-        console.log(data)
+        
         return data
     }
     catch(err){
         throw err
     }
 }
-export {register, login, logOut, getProducts} 
+
+async function addToCart(productId, quantity){
+    
+    try{
+        const response = await fetch('http://localhost:4000/cart', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId,
+                quantity
+            }),
+            credentials: 'include'
+        })
+        console.log(response)
+        const data = await response.json()
+        console.log(data)
+        if(!response.ok){
+            throw new Error(`http error! status: ${response.status}, message: ${data.message}`)
+        }
+
+
+    }
+    catch(err){
+        throw err
+    }
+}
+export {register, login, logOut, getProducts, addToCart} 

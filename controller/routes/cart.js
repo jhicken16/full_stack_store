@@ -115,13 +115,13 @@ module.exports = (app) => {
     router.put('', [
         checkAuthentication,
         body('productId').exists().blacklist('<>/|{}();:?@#!').isInt(),
-        body('quantity').exists().blacklist('<>/|{}();:?@#!').isInt()
+        body('quantity').exists().blacklist('<>/|{}();:?@#!').isInt({ gt: 0 })
     ], (request, response, next) => {
 
         const valid = validationResult(request)
 
         if(!valid.isEmpty()){
-            return response.status(422).send('invalid body')
+            return response.status(422).send({message: 'invalid body'})
         }
    
         const { id } = request.user

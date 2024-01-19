@@ -1,8 +1,9 @@
 const httpError = require('http-errors')
 
 function checkAuthentication(request, response, next){
+        console.log(request.isAuthenticated())
         if (!request.isAuthenticated()){
-            throw httpError(401, 'Not authenticated')
+            next(httpError(401, 'Not authenticated'))
         }
         next()
     }

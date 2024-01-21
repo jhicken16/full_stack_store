@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { getCart } from '../../services/services';
 import Product from '../sub/ProductList'
 import Error from '../Error'
+import { checkOut } from '../../services/services';
 
 
 
@@ -34,6 +35,7 @@ export default function Cart(){
                 price={product.price}
             />
         )) }
+        <button onClick={checkOut}>Checkout</button>
         {error && <Error errorMessage={error} />}
         </>
         

@@ -154,4 +154,28 @@ async function getCart(){
         throw err
     }
 }
-export {register, login, logOut, getProducts, addToCart, getCart} 
+
+async function checkOut(){
+    try{
+        const response = await fetch('http://localhost:4000/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        })
+        console.log(response)
+        const data = await response.json()
+        if(!response.ok){
+            throw new Error(`http error! status: ${response.status}, message: ${data.message}`)
+        }
+        
+        console.log(data)
+        const { url } = data
+        window.location = url
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+export {register, login, logOut, getProducts, addToCart, getCart, checkOut} 

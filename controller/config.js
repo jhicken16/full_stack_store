@@ -13,5 +13,10 @@ module.exports = {
     G: {
         CLIENTID: process.env.GCLIENTID,
         CLIENTSECRET: process.env.GCLIENTSECRET
+    },
+    STRIPE: {
+        PUBLIC: process.env.STRIPEPUBLIC,
+        SECRETE: process.env.STRIPESECRET
     }
+
 }

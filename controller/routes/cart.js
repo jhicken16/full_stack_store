@@ -11,6 +11,9 @@ const OrderService = require('../services/OrderService')
 const Order = new OrderService()
 
 const { checkAuthentication } = require('../utility/helpers')
+const { STRIPE } = require('../config')
+
+const stripe = require('stripe')(STRIPE.SECRETE)
 
 module.exports = (app) => {
     app.use('/cart', router)
@@ -208,10 +211,30 @@ module.exports = (app) => {
         const { order_info } = request.body
         console.log(order_info)
 
-        try{
-
+        try{ 
             const cart = await Cart.usersCart(id)
+            console.log(cart)
 
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                mode: 'payment',
+                line_items: cart.map(item => {
+                    return {
+                        price_data: {
+                            currency: 'gbp',
+                            product_data: {
+                                name: item.name
+                            },
+                            unit_amount: item.price * 100
+                        },
+                        quantity: item.quanity
+                    }
+                }),
+                success_url: 'http://localhost:3000/cart/success',
+                cancel_url:'http://localhost:3000/cart/failed'
+            })
+
+           
             //set up order
             const order = await Order.makeOrder(id, order_info.shipping)
             console.log(order)
@@ -220,8 +243,8 @@ module.exports = (app) => {
             
             //need to remove every think related to user from cart once order has been made.
             await Cart.clearUserCart(id)
-
-            response.status(420).send(addProductToOrderItems)
+            console.log(session)
+            response.status(200).send({url: session.url})
         }
         catch(err){
             next(err)

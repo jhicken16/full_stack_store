@@ -25,6 +25,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
+    "stripe": "^14.13.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },

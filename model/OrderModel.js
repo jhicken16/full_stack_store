@@ -71,7 +71,7 @@ module.exports = class OrderModel {
         }
     }
     async ordersById(id){
-        const statement = 'SELECT * FROM orders JOIN ordered_items ON orders.id = ordered_items.order_id WHERE customer_id = $1;'
+        const statement = 'SELECT * FROM orders JOIN ordered_items ON orders.id = ordered_items.order_id JOIN products ON ordered_items.product_id = products.id WHERE customer_id = $1;'
 
         try{
             const response = await db.query(statement, [id])

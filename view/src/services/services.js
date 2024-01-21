@@ -178,4 +178,30 @@ async function checkOut(){
         console.log(err)
     }
 }
-export {register, login, logOut, getProducts, addToCart, getCart, checkOut} 
+
+async function getOrderHistory(){
+    try{
+        const response = await fetch('http://localhost:4000/orders', {
+            method: 'GET',
+            header: {
+                'Content-type': 'application/json'
+            },
+            credentials: 'include'
+        })
+        const data = await response.json()
+        if(!response.ok){
+            throw new Error(`http error! status: ${response.status}, message: ${data.message}`)
+        }
+        return data.orders.reduce((acc, order) => {
+                    if (!acc[order.order_id]) {
+                      acc[order.order_id] = [];
+                    }
+                    acc[order.order_id].push(order);
+                    return acc;
+                }, {})
+            }
+    catch(err){
+        console.log(err)
+    }
+}
+export {register, login, logOut, getProducts, addToCart, getCart, checkOut, getOrderHistory} 

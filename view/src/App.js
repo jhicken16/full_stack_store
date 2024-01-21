@@ -7,6 +7,7 @@ import ProductDetails from './components/pages/PoductDetails'
 import Cart from './components/pages/cart'
 import Success from './components/pages/Success'
 import Failed from './components/pages/Failed'
+import Orders from './components/pages/Orders'
 
 function App() {
   return  <Routes>
@@ -17,6 +18,7 @@ function App() {
             <Route path='/cart' element={<Cart />} />
             <Route path='/cart/success' element={<Success />} />
             <Route path='/cart/failed' element={<Failed />} />
+            <Route path='/orders' element={<Orders />} />
           </Routes>
 
 }

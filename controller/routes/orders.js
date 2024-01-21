@@ -55,24 +55,18 @@ module.exports = (app) => {
      *              
      *         
      */
-    router.get('/:userId', 
+    router.get('', 
     [
         checkAuthentication,
-        param("userId").exists().toInt().blacklist('<>,./?!`"{(;:')
     ], 
     async (request, response, next) => {
 
-        const result = validationResult(request)
-        if(!result.isEmpty()){
-            return response.status(422).send(`Invalid param`)
-        }
-
-        const { userId } = request.params
-        console.log(userId)
+        const { id } = request.user
+        console.log('id', id)
 
         try{
-            const usersOrders = await Orders.ordersById(userId)
-            response.status(200).send(usersOrders)
+            const usersOrders = await Orders.ordersById(id)
+            response.status(200).send({orders: usersOrders})
         }
         catch(err){
             next(err)
